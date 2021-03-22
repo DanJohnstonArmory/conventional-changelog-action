@@ -182,4 +182,6 @@ module.exports = new (class Git {
     }
   }
 
+  checkout = (branch) => this.exec(`checkout ${branch}`)
+
 })()

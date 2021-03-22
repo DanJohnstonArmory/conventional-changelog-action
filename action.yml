@@ -96,6 +96,10 @@ inputs:
     description: 'Path to the pre-changelog-generation script file'
     required: false
 
+  branch:
+    description: 'Branch to commit changes to'
+    required: false
+
 
 outputs:
   changelog:

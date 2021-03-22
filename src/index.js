@@ -40,6 +40,7 @@ async function run() {
     const skipEmptyRelease = core.getInput('skip-on-empty').toLowerCase() === 'true'
     const conventionalConfigFile = core.getInput('config-file-path')
     const preChangelogGenerationFile = core.getInput('pre-changelog-generation')
+    const branch = core.getInput('branch')
 
     core.info(`Using "${preset}" preset`)
     core.info(`Using "${gitCommitMessage}" as commit message`)
@@ -51,6 +52,7 @@ async function run() {
     core.info(`Using "${tagPrefix}" as tag prefix`)
     core.info(`Using "${outputFile}" as output file`)
     core.info(`Using "${conventionalConfigFile}" as config file`)
+    core.info(`Using "${branch}" as branch`)
 
     if (preCommitFile) {
       core.info(`Using "${preCommitFile}" as pre-commit script`)
@@ -64,6 +66,11 @@ async function run() {
     core.info(`Skipping the update of the version file is "${skipVersionFile ? 'enabled' : 'disabled'}"`)
 
     core.info('Pull to make sure we have the full git history')
+
+    if (branch) {
+      core.info(`Checking out branch ${branch}`)
+      await git.checkout(branch)
+    }
     await git.pull()
 
     const config = conventionalConfigFile && requireScript(conventionalConfigFile)
